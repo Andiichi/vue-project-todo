@@ -2,25 +2,31 @@ import { createStore } from 'vuex';
 import axios from 'axios';
 
 export default createStore({
+
   state() {
     return {
       todos: []
     };
+
   },
 
   mutations: {
+
     storeTodos(state, payload) {
       state.todos = payload;
     },
+
     storeTodo(state, payload) {
-      state.todos.push(payload);
-    },
-    updateTodoInState(state, updatedTodo) {
-      const index = state.todos.findIndex(todo => todo.id === updatedTodo.id);
-      if (index !== -1) {
-        state.todos[index] = updatedTodo;
+      const index = state.todos.findIndex(todo => todo.id === payload.id);
+      if (index >= 0) {
+        // Update existing todo
+        state.todos.splice(index, 1, payload);
+      } else {
+        // Add new todo
+        state.todos.push(payload);
       }
-    }
+    },
+
   },
 
   actions: {
@@ -35,29 +41,30 @@ export default createStore({
         }, 1000)
       })
     },
-    async addTodo({ commit, state }, data) {
-      const nextId = state.todos.length > 0
-        ? Math.max(...state.todos.map(t => parseInt(t.id))) + 1
-        : 1;
 
-      const newTodo = { id: nextId, ...data };
-
-      return axios.post('http://localhost:3000/todos', newTodo)
+    addTodo({ commit }, data) {
+      return axios.post('http://localhost:3000/todos', data)
         .then(response => {
           commit('storeTodo', response.data);
-        })
-        .catch(error => {
-          console.error('Erro ao adicionar todo:', error);
-          throw error;
         });
     },
 
-    updateTodo(context, { id, data }) {
+    updateTodo({ commit }, { id, data }) {
       return axios.put(`http://localhost:3000/todos/${id}`, data)
+        .then(response => {
+          commit('storeTodo', response.data);
+        });
+    },
+
+    deleteTodo(context, id) {
+      return axios.put(`http://localhost:3000/todos/${id}`)
+        .then(() => {
+          // commit('storeTodo', response.data);
+        });
     }
 
   },
-  
+
   getters: {
   },
   modules: {

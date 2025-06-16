@@ -23,7 +23,8 @@ export default {
     methods: {
         addTodo() {
             if (!this.title) {
-                return false;
+                alert('A tarefa não pode ser vazia');
+                return
             }
 
             this.$store.dispatch('addTodo', {
