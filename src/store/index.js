@@ -4,10 +4,7 @@ import axios from 'axios';
 export default createStore({
 
   state() {
-    return {
       todos: []
-    };
-
   },
 
   mutations: {
@@ -45,7 +42,7 @@ export default createStore({
               commit('storeTodos', response.data)
               resolve()
             })
-        }, 1000)
+        }, 2000)
       })
     },
 
