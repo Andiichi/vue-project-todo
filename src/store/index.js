@@ -4,10 +4,8 @@ import axios from 'axios';
 export default createStore({
 
   state() {
-    return {
       todos: []
-    };
-
+ 
   },
 
   mutations: {
