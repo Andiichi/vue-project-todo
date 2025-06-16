@@ -1,0 +1,29 @@
+{
+  "todos": [
+    {
+      "title": "Learn JavaScript",
+      "completed": true,
+      "id": 1
+    },
+    {
+      "title": "Build a web application",
+      "completed": false,
+      "id": 2
+    },
+    {
+      "title": "Deploy the application",
+      "completed": true,
+      "id": 3
+    },
+    {
+      "id": 4,
+      "title": "Write unit tests",
+      "completed": true
+    },
+    {
+      "id": 5,
+      "title": "Refactor code",
+      "completed": false
+    }
+  ]
+}
