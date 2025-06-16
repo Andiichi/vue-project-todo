@@ -40,6 +40,9 @@ mr-2">
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+
 export default {
     props: {
         todo: {
@@ -48,49 +51,103 @@ export default {
         },
     },
 
-    data() {
-        return {
-            title: this.todo.title, // inicializando o título da tarefa
-            // mudando o estado de uma propriedade localmente
-            isCompleted: this.todo.completed,
+    setup(props){
+        const title = ref(props.todo.title)
+        const isCompleted = ref(props.todo.completed)
+        const store = useStore();
+
+        //onDelete
+        const onDeleteTodo = () => {
+            store.dispatch('deleteTodo', props.todo.id);
         }
-    },
 
-    methods: {
-        // Atualiza o título da tarefa
-        onTitleChange() {
-            if (!this.title) {
-                alert('O título da tarefa não pode ser vazio');
-                this.title = this.todo.title; // Reverte para o título original
-                return
-            }
-
-            this.updateTodo();
-        },
-
-        // Atualiza a tarefa no Vuex
-        updateTodo($evt) {
+        // updateTodo
+        const updateTodo = () => {
             const payload = {
-                id: this.todo.id,
+                id: props.todo.id,
                 data: {
-                    title: this.title,
-                    completed: this.isCompleted
+                    title: title.value,
+                    completed: isCompleted.value
                 }
             }
-            this.$store.dispatch('updateTodo', payload)
-        },
-
-        // Alterna o estado de conclusão da tarefa
-        onCheckClick() {
-            this.isCompleted = !this.isCompleted;
-
-            this.updateTodo()
-        },
-
-        onDeleteTodo() {
-            this.$store.dispatch('deleteTodo', this.todo.id)
+            store.dispatch('updateTodo', payload);
         }
+
+        // onTitleChange
+        const onTitleChange = () => {
+            if (!title.value) {
+                // Verifica se o título está vazio
+                alert('O título da tarefa não pode ser vazio');
+                title.value = props.todo.title; // Reverte para o título original
+                return;
+            }
+
+            updateTodo();
+        };
+
+        // oncheckClick
+        const onCheckClick = () => {
+            // Alterna o estado de conclusão da tarefa
+            isCompleted.value = !isCompleted.value;
+
+            updateTodo();
+        };
+
+        // envio de dados para o template do componente
+        return {
+            title,
+            isCompleted,
+            onDeleteTodo,
+            onTitleChange,
+            onCheckClick,
+
+        }
+
     },
 
+
 }
+    // data() {
+    //     return {
+    //         title: this.todo.title, // inicializando o título da tarefa
+    //         // mudando o estado de uma propriedade localmente
+    //         isCompleted: this.todo.completed,
+    //     }
+    // },
+
+    // methods: {
+    //     // Atualiza o título da tarefa
+    //     onTitleChange() {
+    //         if (!this.title) {
+    //             alert('O título da tarefa não pode ser vazio');
+    //             this.title = this.todo.title; // Reverte para o título original
+    //             return
+    //         }
+
+    //         this.updateTodo();
+    //     },
+
+    //     // Atualiza a tarefa no Vuex
+    //     updateTodo($evt) {
+    //         const payload = {
+    //             id: this.todo.id,
+    //             data: {
+    //                 title: this.title,
+    //                 completed: this.isCompleted
+    //             }
+    //         }
+    //         this.$store.dispatch('updateTodo', payload)
+    //     },
+
+    //     // Alterna o estado de conclusão da tarefa
+    //     onCheckClick() {
+    //         this.isCompleted = !this.isCompleted;
+
+    //         this.updateTodo()
+    //     },
+
+    //     onDeleteTodo() {
+    //         this.$store.dispatch('deleteTodo', this.todo.id)
+    //     }
+    // },
 </script>

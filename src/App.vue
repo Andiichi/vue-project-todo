@@ -1,12 +1,14 @@
 <template>
     <div class="px-3 py-10 md:px-10">
         <div class="w-full sm:w-1/2 lg:w-1/3 mx-auto">
-         
             <TodoFormAdd />
-
+            
             <TodoSpinner v-if="loading" />
             <template v-else>
-                <TodoItems v-if="$store.state.todos.length" />
+
+                <TodoItems
+                    v-if="$store.state.todos.length"
+                />
 
                 <TodoEmpty v-else />
             </template>
@@ -42,7 +44,9 @@ export default {
             loading.value = false;
         })
 
-        return loading;
+        return {
+            loading,
+        }
     },
 }
 

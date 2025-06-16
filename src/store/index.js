@@ -5,7 +5,6 @@ export default createStore({
 
   state() {
       todos: []
- 
   },
 
   mutations: {
@@ -43,7 +42,7 @@ export default createStore({
               commit('storeTodos', response.data)
               resolve()
             })
-        }, 1000)
+        }, 2000)
       })
     },
 
