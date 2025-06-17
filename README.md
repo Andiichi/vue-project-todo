@@ -1,6 +1,8 @@
 # 📋 Vue Todo Project
 
-Este é um projeto de lista de tarefas (ToDo) desenvolvido com **Vue 3**, utilizando **Vite** como bundler, **TailwindCSS** para o estilo e **Vuex** para gerenciamento de estado. Os dados são armazenados e simulados através do pacote **[json-server](https://github.com/typicode/json-server)**.
+Este é um projeto de lista de tarefas (ToDo) desenvolvido com **Vue 3**, utilizando **Vite** como bundler, **TailwindCSS** para o estilo e **Vuex** para gerenciamento de estado. Os dados são armazenados e simulados através do **pacote [json-server](https://github.com/typicode/json-server)**.
+
+**Projeto realizado junto a [playlist do Tiago Matos no yt](https://www.youtube.com/playlist?list=PLcoYAcR89n-qTYqfWTGxXMnAvCqY3JF8w)**
 
 ---
 
